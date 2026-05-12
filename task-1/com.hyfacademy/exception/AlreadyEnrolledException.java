@@ -1,8 +1,8 @@
 package com.hyfacademy.exception;
 
 public class AlreadyEnrolledException extends EnrolmentException {
-    private String studentName;
-    private String courseName;
+    private final String studentName;
+    private final String courseName;
 
     public AlreadyEnrolledException(String studentName, String courseName){
         super(String.format("%s is already enrolled in '%s'", studentName, courseName));
