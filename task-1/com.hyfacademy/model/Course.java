@@ -107,6 +107,30 @@ public abstract class Course implements Enrollable {
         return bar.toString();
     }
 
+    public String studentReportListProgress(){
+        StringBuilder sb = new StringBuilder();
+
+        for (int i=0; i < getEnrolledCount(); i++){
+            Student s = getEnrolledStudent()[i];
+            int progress = getStudentProgress(s);
+
+            sb.append(String.format("  %-8s %-18s %3d%%   %s%n",
+                    s.getUserId(), s.getName(), progress, getProgressBar(s)));
+        }
+
+        return sb.toString();
+    }
+
+    public double getAverageCourseProgress(){
+        int totalStudentsProgress = 0;
+        for(int i=0; i < getEnrolledCount(); i++){
+            Student[] students = getEnrolledStudent();
+            totalStudentsProgress += getStudentProgress(students[i]);
+        }
+
+        return (double) totalStudentsProgress / getEnrolledCount();
+    }
+
     public static String generateCourseId(){
         courseCounter ++;
         return String.format("CRS-%03d", courseCounter);

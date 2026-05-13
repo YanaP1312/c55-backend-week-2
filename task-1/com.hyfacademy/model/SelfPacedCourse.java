@@ -34,27 +34,13 @@ public class SelfPacedCourse extends Course implements Reportable {
         sb.append(String.format("  %-12s : %s%n", "Name", getCourseName()));
         sb.append(String.format("  %-12s : %s%n", "Capacity", capacityStatus()));
         sb.append(String.format("  %-12s : %s%n", "Est. Hours", estimatedHours));
-        sb.append("──────────────────────────────────────────");
+        sb.append("──────────────────────────────────────────\n");
         sb.append("  STUDENT PROGRESS\n");
-        sb.append("──────────────────────────────────────────");
+        sb.append("──────────────────────────────────────────\n");
+        sb.append(studentReportListProgress());
+        sb.append("──────────────────────────────────────────\n");
 
-        for (int i=0; i < getEnrolledCount(); i++){
-            Student s = getEnrolledStudent()[i];
-            int progress = getStudentProgress(s);
-
-            sb.append(String.format("  %-8s %-18s %3d%%   %s%n",
-                    s.getUserId(), s.getName(), progress, getProgressBar(s)));
-        }
-
-        sb.append("──────────────────────────────────────────");
-
-        int totalStudentsProgress = 0;
-        for(int i=0; i < getEnrolledCount(); i++){
-            Student[] students = getEnrolledStudent();
-            totalStudentsProgress += getStudentProgress(students[i]);
-        }
-        double avgProgress = (double) totalStudentsProgress / getEnrolledCount();
-        sb.append(String.format("  %-10s : %.2f%n", "Avg Progress", avgProgress));
+        sb.append(String.format("  %-10s : %.2f%%%n", "Avg Progress", getAverageCourseProgress()));
         sb.append("══════════════════════════════════════════\n");
 
         return sb.toString();
