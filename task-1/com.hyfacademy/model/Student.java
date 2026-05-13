@@ -4,7 +4,7 @@ import com.hyfacademy.exception.AlreadyEnrolledException;
 import com.hyfacademy.exception.EnrolmentException;
 
 public class Student extends User {
-    private Course[] enrolledCourses = new Course[5];
+    private final Course[] enrolledCourses = new Course[5];
     private int courseCounter = 0;
 
     private static int studentCounter = 0;

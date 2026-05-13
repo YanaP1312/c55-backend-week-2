@@ -4,18 +4,21 @@ import com.hyfacademy.exception.AlreadyEnrolledException;
 import com.hyfacademy.exception.CourseFullException;
 import com.hyfacademy.exception.EnrolmentException;
 import com.hyfacademy.exception.InvalidProgressException;
+import com.hyfacademy.service.Enrollable;
 
-public abstract class Course {
+public abstract class Course implements Enrollable {
     private final String courseName;
     private final String courseId;
-    private int maxStudents;
+    private final int maxStudents;
 
     private int enrolledCount = 0;
 
-    private int[] studentProgress;
-    private Student[] enrolledStudent;
+    private final int[] studentProgress;
+    private final Student[] enrolledStudent;
 
     static int courseCounter = 0;
+
+    static final int BAR_BLOCKS = 10;
 
     public Course(String courseName, int maxStudents){
         this.courseName = courseName;
@@ -29,6 +32,8 @@ public abstract class Course {
     public String getCourseName(){return courseName;}
     public int getMaxStudents(){return maxStudents;}
     public String getCourseId(){return courseId;}
+    public int getEnrolledCount(){return enrolledCount;}
+    public Student[] getEnrolledStudent(){return enrolledStudent;}
 
     public abstract String getCourseType();
     public abstract String getScheduleInfo();
@@ -85,6 +90,21 @@ public abstract class Course {
 
     public boolean isFull(){
         return enrolledCount == maxStudents;
+    }
+
+    public String getProgressBar(Student student){
+        int filledBlocks = (int) Math.round(getStudentProgress(student) / 10.0);
+
+        StringBuilder bar = new StringBuilder();
+
+        for(int i=0; i < BAR_BLOCKS; i++){
+            if(i < filledBlocks){
+                bar.append("█");
+            } else {
+                bar.append("░");
+            }
+        }
+        return bar.toString();
     }
 
     public static String generateCourseId(){

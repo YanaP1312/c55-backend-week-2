@@ -3,8 +3,8 @@ package com.hyfacademy.model;
 import com.hyfacademy.exception.EnrolmentException;
 
 public class Mentor extends User {
-    private String expertise;
-    private Course[] assignedCourses = new Course[3];
+    private final String expertise;
+    private final Course[] assignedCourses = new Course[3];
     private int courseCounter = 0;
 
     private static int mentorCounter = 0;
