@@ -37,16 +37,15 @@ public class Student extends User {
         courseCounter ++;
     }
 
-//    BACK AFTER COURSE CLASS CREATE!
-//    public String getProgress(String courseName){
-//        for(Course c : enrolledCourses){
-//            if(c != null && c.getCourseName.equals(courseName)){continue;}
-//            else{throw new EnrolmentException(String.format("%s doesn't enroll in '%s' course.", getName(), courseName));}
-//        }
-//
-//        return String.format("%s progress in course '%s' equal to ", getName(), courseName)
-//
-//    }
+    public int getProgress(String courseName){
+        for(Course c : enrolledCourses) {
+            if (c != null && c.getCourseName().equals(courseName)) {
+                return c.getStudentProgress(this);
+            }
+        }
+        throw new EnrolmentException(String.format(
+                "%s doesn't enroll in '%s' course.", getName(), courseName));
+    }
 
     public static String generateStudentId(){
         studentCounter ++;
