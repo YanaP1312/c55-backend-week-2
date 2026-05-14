@@ -10,15 +10,17 @@ public abstract class Course implements Enrollable {
     private final String courseName;
     private final String courseId;
     private final int maxStudents;
-
-    private int enrolledCount = 0;
-
     private final int[] studentProgress;
     private final Student[] enrolledStudent;
 
-    static int courseCounter = 0;
+    private int enrolledCount = 0;
+    private static int courseCounter = 0;
 
-    static final int BAR_BLOCKS = 10;
+    private static final int BAR_BLOCKS = 10;
+    public static final int MIN_PROGRESS = 0;
+   public static final int MAX_PROGRESS = 100;
+
+
 
     public Course(String courseName, int maxStudents){
         this.courseName = courseName;
@@ -64,7 +66,7 @@ public abstract class Course implements Enrollable {
     }
 
     public void updateProgress(Student student, int progress){
-        if(progress < 0 || progress > 100){
+        if(progress < MIN_PROGRESS || progress > MAX_PROGRESS){
             throw new InvalidProgressException(progress);
         }
 
@@ -93,7 +95,7 @@ public abstract class Course implements Enrollable {
     }
 
     public String getProgressBar(Student student){
-        int filledBlocks = (int) Math.round(getStudentProgress(student) / 10.0);
+        int filledBlocks = (int) Math.round((float) getStudentProgress(student) / BAR_BLOCKS);
 
         StringBuilder bar = new StringBuilder();
 
@@ -114,7 +116,7 @@ public abstract class Course implements Enrollable {
             Student s = getEnrolledStudent()[i];
             int progress = getStudentProgress(s);
 
-            sb.append(String.format("  %-8s %-18s %3d%%   %s%n",
+            sb.append(String.format("  %-6s %-13s %3d%% %s%n",
                     s.getUserId(), s.getName(), progress, getProgressBar(s)));
         }
 
@@ -123,8 +125,11 @@ public abstract class Course implements Enrollable {
 
     public double getAverageCourseProgress(){
         int totalStudentsProgress = 0;
+
+        if (getEnrolledCount() == 0) return 0;
+
+        Student[] students = getEnrolledStudent();
         for(int i=0; i < getEnrolledCount(); i++){
-            Student[] students = getEnrolledStudent();
             totalStudentsProgress += getStudentProgress(students[i]);
         }
 

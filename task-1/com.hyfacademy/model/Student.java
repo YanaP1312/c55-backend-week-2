@@ -4,9 +4,11 @@ import com.hyfacademy.exception.AlreadyEnrolledException;
 import com.hyfacademy.exception.EnrolmentException;
 
 public class Student extends User {
-    private final Course[] enrolledCourses = new Course[5];
-    private int courseCounter = 0;
+    private static final int MAX_ENROLLED_COURSES = 5;
 
+    private final Course[] enrolledCourses = new Course[MAX_ENROLLED_COURSES];
+
+    private int courseCounter = 0;
     private static int studentCounter = 0;
 
     public Student(String name, String email){
@@ -22,7 +24,7 @@ public class Student extends User {
     public int getCourseCount(){return courseCounter;}
 
     public void enrol(Course course){
-        if(courseCounter == 5){
+        if(courseCounter == MAX_ENROLLED_COURSES){
             throw new EnrolmentException(
                     String.format("%s own course list is full (5 courses max)", getName()));
         }
@@ -51,7 +53,4 @@ public class Student extends User {
         studentCounter ++;
         return String.format("STU-%03d", studentCounter);
     }
-
-
-
 }

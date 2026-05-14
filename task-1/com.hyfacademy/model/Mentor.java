@@ -3,10 +3,11 @@ package com.hyfacademy.model;
 import com.hyfacademy.exception.EnrolmentException;
 
 public class Mentor extends User {
+    private static final int MAX_ASSIGNED_COURSES = 3;
     private final String expertise;
-    private final Course[] assignedCourses = new Course[3];
-    private int courseCounter = 0;
+    private final Course[] assignedCourses = new Course[MAX_ASSIGNED_COURSES];
 
+    private int courseCounter = 0;
     private static int mentorCounter = 0;
 
     public Mentor(String name, String email, String expertise){
@@ -21,7 +22,7 @@ public class Mentor extends User {
     public String getRole(){return "MENTOR";}
 
    public void assignToCourse(Course course){
-        if(courseCounter == 3){
+        if(courseCounter == MAX_ASSIGNED_COURSES){
             throw new EnrolmentException(
                     String.format("Mentor %s cannot be assigned to more than 3 courses", getName())
             );

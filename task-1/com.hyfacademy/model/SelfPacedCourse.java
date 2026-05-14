@@ -1,6 +1,5 @@
 package com.hyfacademy.model;
 
-import com.hyfacademy.service.Enrollable;
 import com.hyfacademy.service.Reportable;
 
 public class SelfPacedCourse extends Course implements Reportable {
